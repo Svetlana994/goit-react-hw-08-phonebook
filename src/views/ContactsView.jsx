@@ -6,6 +6,8 @@ import { getLogIn } from "redux/auth/auth-selectors";
 import Contacts from "../components/Contacts/Contacts";
 import Form from "../components/Form/Form";
 
+import { Container } from "../App.styles";
+
 function ContactsView() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(getLogIn);
@@ -13,14 +15,20 @@ function ContactsView() {
   useEffect(() => dispatch(contactsOperations.getContacts()), [dispatch]);
 
   return (
-    <>
+    <div>
       {isLoggedIn && (
-        <>
+        <Container
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            alignItems: "flex-end",
+          }}
+        >
           <Form />
           <Contacts />
-        </>
+        </Container>
       )}
-    </>
+    </div>
   );
 }
 

@@ -12,8 +12,10 @@ function Filter() {
     <div>
       <TextField
         id="standard-multiline-flexible"
-        label="Find contacts by name"
-        size="medium"
+        label="FIND CONTACTS BY NAME"
+        color="secondary"
+        focused
+        style={{ marginBottom: "30px", width: "250px" }}
         InputLabelProps={{
           shrink: true,
         }}

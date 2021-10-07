@@ -1,88 +1,73 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { contactsSelectors } from "redux/phonebook";
 import { contactsOperations } from "redux/phonebook";
 
-import { WrapperForm, Container } from "./Form.styles";
+import { yupContact } from "validation/yup";
+
+import { WrapperForm, CssTextField } from "./Form.styles";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 function FormContacts() {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-
   const contacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.currentTarget;
-    switch (name) {
-      case "name":
-        setName(value);
-        break;
-
-      case "number":
-        setNumber(value);
-        break;
-
-      default:
-        return;
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
+  const handleSubmitForm = (values, { setSubmitting, resetForm }) => {
     if (
       contacts.find(
-        (contact) => name.toLowerCase() === contact.name.toLowerCase()
+        (contact) => values.name.toLowerCase() === contact.name.toLowerCase()
       )
     ) {
-      alert(`${name} is already in contacts.`);
+      alert(`${values.name} is already in contacts.`);
+      setSubmitting(false);
       return;
     }
-
-    dispatch(contactsOperations.addContact({ name, number }));
-
+    dispatch(contactsOperations.addContact(values));
     resetForm();
-  };
-
-  const resetForm = () => {
-    setName("");
-    setNumber("");
+    setSubmitting(false);
   };
 
   return (
     <WrapperForm>
-      <form onSubmit={handleSubmit}>
-        <Container>
-          <TextField
-            name="name"
-            value={name}
-            id="outlined-helperText"
-            label="Name"
-            variant="outlined"
-            required
-            onChange={handleInputChange}
-          />
-        </Container>
+      <Formik
+        initialValues={{
+          name: "",
+          number: "",
+        }}
+        validationSchema={yupContact}
+        onSubmit={handleSubmitForm}
+      >
+        {({ handleSubmit }) => (
+          <Form>
+            <Field
+              as={CssTextField}
+              variant="outlined"
+              name="name"
+              label="Name"
+              color="secondary"
+              focused
+              style={{ marginBottom: "20px", width: "250px" }}
+            />
+            <br />
+            <Field
+              as={CssTextField}
+              variant="outlined"
+              type="tel"
+              placeholder="000-000-0000"
+              label="Number"
+              name="number"
+              color="secondary"
+              focused
+              style={{ marginBottom: "20px", width: "250px" }}
+            />
+            <br />
 
-        <Container>
-          <TextField
-            type="tel"
-            name="number"
-            value={number}
-            id="outlined-helperTextqqq"
-            label="Number"
-            variant="outlined"
-            required
-            onChange={handleInputChange}
-          />
-        </Container>
-        <Button type="submit" variant="contained" color="primary">
-          Add contact
-        </Button>
-      </form>
+            <Button variant="contained" color="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        )}
+      </Formik>
     </WrapperForm>
   );
 }

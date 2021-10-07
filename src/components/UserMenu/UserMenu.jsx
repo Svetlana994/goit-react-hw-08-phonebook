@@ -10,14 +10,14 @@ function UserMenu() {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div style={{ padding: "10px" }}>
       <span style={{ marginRight: "30px", fontSize: "16px" }}>
         Добро пожаловать, {userName}
       </span>
       <Button
         type="submit"
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={() => dispatch(authOperations.logOut())}
       >
         Выйти

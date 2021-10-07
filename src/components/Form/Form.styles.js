@@ -1,12 +1,18 @@
-import styled from "@emotion/styled/macro";
+import styles from "@emotion/styled/macro";
+import { styled } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
-export const WrapperForm = styled.div`
+export const WrapperForm = styles.div`
   width: 400px;
-  margin: 30px 0;
-  padding: 30px;
-  box-shadow: 0px 0px 5px 1px #333;
+  height: 170px;
+  margin: 0 100px;
+  padding: 50px;
+  box-shadow: 0px 0px 5px 1px #fff;
 `;
 
-export const Container = styled.div`
-  margin-bottom: 35px;
-`;
+export const CssTextField = styled(TextField)({
+  "& .MuiInputBase-input": {
+    backgroundColor: "transparent",
+    color: "#fff",
+  },
+});
