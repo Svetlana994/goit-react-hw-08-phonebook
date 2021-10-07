@@ -3,8 +3,6 @@ import { getLogIn } from "redux/auth/auth-selectors";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-// import Navigation from "../Navigation/Navigation";
-// import AuthNav from "../AuthNav/AuthNav";
 import UserMenu from "../UserMenu/UserMenu";
 import { useStyles } from "./AppBar.styles";
 
