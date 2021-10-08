@@ -61,6 +61,7 @@ function RegisterView() {
               <Button
                 variant="contained"
                 color="primary"
+                type="submit"
                 style={{ marginTop: "20px" }}
                 disabled={isSubmitting}
               >
